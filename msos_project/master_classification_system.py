@@ -43,15 +43,11 @@ def check_if_correct_category(category_prediction, file_category):
     print("")
 
     if category_prediction == file_category:
-
         prediction_correct = 1
-
         pass
 
     elif category_prediction != file_category:
-
         prediction_correct = 0
-
         pass
 
     else:
@@ -170,19 +166,12 @@ def Single_File_Classification(input_path,
         average_sc, standard_deviation_sc = spectral_centroid_classifier.spectral_centroid_classifier(input_path,
                                                                                                         show_graph=False)
 
-
-        #print("Average spectral centroid = ", average_sc)
-        #print("Standard deviation of spectral centroid = ", standard_deviation_sc)
         
         sc_category_weights = spectral_centroid_assign_weights.spectral_centroid_assign_weights(average_sc,
                                                                                             standard_deviation_sc,
                                                                                             all_heatmaps,
                                                                                             all_xedges,
                                                                                             all_yedges)
-
-
-        #print("Average spectral centroid = ", average_sc)
-        #print("Standard deviation of spectral centroid = ", standard_deviation_sc)
         input_weights.append(sc_category_weights)
         pass
 
@@ -396,7 +385,7 @@ def Single_File_Classification(input_path,
 
 def CombineWeights(input_weights):
 
-    # combine input weights sensibly
+    # combine input weights using simple averaging
     # return the combined weight
 
     output_weights = []
@@ -407,17 +396,11 @@ def CombineWeights(input_weights):
 
         
     for n in range(len(input_weights[0])):
-
-        #print("N = ", n)  # weight number ([0, 1, 2, 3, 4]) for each category
-
         output_weight = []
         
         for weights_index in range(len(input_weights)):
             # current test method weights
             current_weight = input_weights[weights_index]
-            #print("Current weight = ", current_weight)
-            #print("category weight = ", current_weight[n])
-            # weight number index for current test method (i.e. spectral centroid music weight [0.34])
             output_weight.append(current_weight[n])
             pass
 
@@ -473,9 +456,9 @@ correct_category_guesses = [0, 0, 0, 0, 0]
 prediction_correct = 0
 
 # development path
-path = r"C:\\Users\h_bul\Documents\Acoustics Year 3\Project\Audio Resources\Development\\"
+#path = r"C:\\Users\h_bul\Documents\Acoustics Year 3\Project\Audio Resources\Development\\"
 # evaluation path
-#path = r"C:\\Users\h_bul\Documents\Acoustics Year 3\Project\Audio Resources\Evaluation\Evaluation\\"
+path = r"C:\\Users\h_bul\Documents\Acoustics Year 3\Project\Audio Resources\Evaluation\Evaluation\\"
 
 classification_method = "DSP"
 rhythm_method = False
@@ -494,12 +477,10 @@ if classification_method == "DSP":
 
     previously_tested_file_indices = []
     
-    for n in range(1):
+    for n in range(5):
         print("category index = ", n)
-        #average_zcrs = []
-        #sd_zcrs = []
-        n = 4
-        for x in range(20):
+        
+        for x in range(100):
             print("file index = ", x)
             input_path, file_category, exact_file_index, filename = generate_random_input_file(path, x, n)
             #print("File category = ", file_category)
@@ -616,75 +597,3 @@ elif classification_method == "Single":
                                                   effective_duration_method)
         
 
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-# correlation between average and standard deviation spectral centroid values
-pearson_correlation_value = scipy.stats.pearsonr(average_spectral_centroids, average_spectral_sds)
-finds correlation in average and sd of spectral centroid
-print("")
-print("Pearson correlation value = ", pearson_correlation_value)
-pearson_correlations.append(pearson_correlation_value)
-"""
-"""
-
-#input_file = numpy.array(input_file[1], dtype = int)  # create numpy array of "original" input file
-#matplotlib.pyplot.plot(averages_over_sds, label = file_category)  # plot input waveform
-
-average_inverse_COV = sum(averages_over_sds)/len(averages_over_sds) # average of the inverse coefficients of variance!
-print("Average inverse Coeff of variance = ", average_inverse_COV)
-
-heatmap, xedges, yedges = numpy.histogram2d(average_spectral_centroids, average_spectral_sds, bins=20)
-extent = [xedges[0], xedges[-1], yedges[0], yedges[-1]]
-
-matplotlib.pyplot.clf()
-matplotlib.pyplot.imshow(heatmap.T, extent=extent, origin='lower')
-
-#matplotlib.pyplot.plot(initial_peak_points,initial_peak_values, label= "peak_values")  # plot detected peak values
-#pyplot.xlabel("File index in category")
-#pyplot.ylabel("Average SC / Standard Dev. of SC")
-#pyplot.legend()
-
-#matplotlib.pyplot.plot(flattened_peak_points, flattened_peak_values, label= "flat_peak_values", marker="x")  # plot flattened peak values
-#pyplot.legend()
-print("Heatmap = ", heatmap)
-print("X edges = ", xedges)
-print("Y edges = ", yedges)
-pyplot.show()
-
-"""
-
-
-
-
-
-
-"""
-input_file = numpy.array(input_file[1], dtype = int)  # create numpy array of "original" input file
-matplotlib.pyplot.plot(input_file, label= "input_file")  # plot input waveform
-matplotlib.pyplot.plot(initial_peak_points,initial_peak_values, label= "peak_values")  # plot detected peak values
-pyplot.xlabel("Time")
-pyplot.ylabel("Amplitude")
-#pyplot.legend()
-
-for similar_peak_loc, similar_peak_val in zip(similar_magnitude_locations, similar_magnitude_values):
-    matplotlib.pyplot.plot(similar_peak_loc, similar_peak_val, label= "similar_peak_values", marker="o")
-    pass
-
-    
-#matplotlib.pyplot.plot(flattened_peak_points, flattened_peak_values, label= "flat_peak_values", marker="x")  # plot flattened peak values
-pyplot.xlabel("Time")
-pyplot.ylabel("Amplitude")
-#pyplot.legend()
-pyplot.show()
-"""
