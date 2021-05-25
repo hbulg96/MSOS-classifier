@@ -1,5 +1,6 @@
 # MSOS-classifier
-Audio classification system using heatmap based feature extraction system, based on work in high level sound taxonomies in the 'Making Sense of Sounds' research project
+Audio classification system using heatmap based feature extraction system, based on work in high level sound taxonomies in the 'Making Sense of Sounds' research project.
+Part of an undergraduate project.
 
 To use the system, download the entire project as a ZIP file, and uncompress it inside your 'site-packages' file in the python directory on your machine, open the 'master_classification' file in an IDE, and edit the 'path' variable to your directory for the making sense of sounds project 'development' or 'evaluation' audio sets, then simply run the 'master_classification' file.
 
